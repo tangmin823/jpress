@@ -1,0 +1,17 @@
+<#include "_layout.html"/>
+<#macro css>
+	#u-main{margin:10px 0;}
+</#macro>
+<@layout>
+<div class="u-input">
+	<h3>用户注册</h3><form action="${CPATH}/user/doRegister" method="post">
+	<table>
+		<tr><th>用户名：</th><td><input type="text" name="username"></td></tr>
+		<tr><th>邮箱：</th><td><input type="text" name="email"></td></tr>
+		<tr><th>密码：</th><td><input type="password" name="password"></td></tr>
+		<tr><th>确认密码：</th><td><input type="password" name="confirm_password"></td></tr>
+		<tr><th>验证码：</th><td><input type="text" name="_register_captcha" style="width:50%;float:left;"><img cdn-exclude src="${CPATH}/captcha" onclick="this.src='${CPATH}/captcha?d='+Math.random();" style="float:left;height:32px;" ></td></tr>
+		<tr><th></th><td><input type="submit" class="button" value="注册"> </td></tr>
+	</table></form>
+</div>
+</@layout>

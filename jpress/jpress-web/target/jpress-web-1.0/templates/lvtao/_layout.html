@@ -1,0 +1,66 @@
+<#macro script_import>
+</#macro> 
+<#macro script>
+</#macro> 
+<#macro css_import>
+</#macro> 
+<#macro css>
+</#macro> 
+<#macro layout>
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+  <head>
+    <title>${WEB_TITLE!WEB_NAME!} - ${WEB_SUBTITLE!'LVTAO.NET'}</title>
+    <meta name="keywords" content="${META_KEYWORDS!}">
+    <meta name="description" content="${META_DESCRIPTION!}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="${CTPATH}/assets/css.css"/>
+    <link rel="shortcut icon" href="${CTPATH}/assets/favicon.ico"/>
+    <@css_import />
+    <#if css ??>
+      <style type="text/css">
+        <@css />
+      </style>
+    </#if>
+  </head>
+  <body>
+  <div class="u-top">
+    <span>58看盘网 学习行情指标，分析盘面预测走势</span>
+    [<a href="${CPATH!}/user/login?goto=${goto!}">登录</a>·<a href="${CPATH}/user/register?goto=${goto!}">注册</a>]
+  </div>
+  <div class="u-header">
+    <a href="${CPATH}/"><h1 class="u-logo">${WEB_NAME!}</h1></a>
+    <!--<div class="u-ad"><a href="${OPTION('jpblog_banner_url')!'#'}" target="_blank"><img src="${CPATH}${OPTION('jpblog_banner_image')!TPATH+'/assets/images/banner.jpg'}"/></a></div>-->
+  </div>
+
+  <div class="u-menu">
+    <a href="${CPATH}/" <#if "/" == REQUEST.requestURI!>class="hover"</#if>>首页</a>
+    <@jp.menus>
+    <#list menus as menu><a href="${menu.url!}" <#if menu.isActive() >class="hover"</#if>>${menu.title!}</a>
+    </#list>
+  </@jp.menus>
+  </div>
+  <div id="u-main">
+  <#nested>
+    <div id="footer">
+      <div id="footer_bottom">
+        ${OPTION('web_copyright')!'暂未填写版权信息'}
+          <a title="58看盘网" href="http://www.miibeian.gov.cn" target="_blank">沪ICP备18006062号-3</a>
+      </div>
+    </div>
+  </div>
+  </body>
+  </html>
+  <div style="display: none;">
+    ${OPTION('jpblog_statistical_code')!}
+  </div>
+<@script_import />
+<script type="text/javascript">
+<@script />
+</script>
+</body>
+</html>
+</#macro>

@@ -1,0 +1,33 @@
+<#include "_layout.html"/> 
+<@layout>
+<@jp.contentPage pageSize="10" >
+<div id="u-post-list" class="f-cbli">
+	<#list page.getList() as content>
+		<li>
+			<div class="u-digg">
+				<div class="u-digg-body">${content.created?string("MM.dd")}<span>${content.created?string("yyyy")}</span></div>
+			</div>
+			<div class="u-item">
+				<h3><a href="${content.url}" target="_blank">${content.title}</a></h3>
+				<p class="u-summary"><a><img src="${CPATH}${content.avatar!TPATH+'/assets/images/avatar.jpg'}" alt="${content.nickname!}" width="48" height="48"></a>${content.summary}</p>
+				<div class="u-item-foot">${content.getTaxonomyAsUrl('category')!'未分类'} 发布于 ${content.created?string("yyyy-MM-dd")}<span class="article_comment">${content.comment_count!'0'}</span><span class="article_view">${content.view_count!'0'}</span></div>
+			</div>
+		</li>
+	</#list>
+</div>
+<div class="pager">
+	<@pagination>
+	<#list pages as page><a href="${page.url!}" class="${page.style!}">${page.text!}</a></#list>
+</@pagination>
+</div>
+</@jp.contentPage>
+<div id="u-left">
+	<#include "_tags_box.html"/>
+	<#include "_best.html"/>
+</div>
+<div id="u-right">
+	<#include "_searcher_box.html"/>
+	<#include "_content_box1.html"/>
+	<#include "_content_box2.html"/>
+</div>
+</@layout>

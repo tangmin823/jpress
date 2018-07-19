@@ -1,0 +1,9 @@
+<div class="u-tags">
+	<div class="u-tags-title"><h4>热门标签</h4></div>
+	<ul class="u-tags-item">
+		<@jp.taxonomys type="tag">
+		<#list taxonomys as tag><li><a href="${tag.url!}">${tag.title!}</a></li></li></#list>
+</@jp.taxonomys >
+	</ul>
+	<div class="u-tags-item-bottom"></div>
+</div>

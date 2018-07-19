@@ -1,0 +1,103 @@
+<#include "_layout.html"/> 
+<#macro script_import>
+ <script src="${CTPATH}/assets/js/jquery-2.1.1.min.js"></script>
+ <script src="${CTPATH}/assets/mediaelement/mediaelement-and-player.min.js"></script>
+ <script src="${CPATH}/counter?cid=${content.id!}"></script>
+ <script src="${CTPATH}/assets/highlight/highlight.js"></script>
+</#macro> 
+<#macro script>
+$(document).ready(function() {
+  $('code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+  $('video,audio').mediaelementplayer();
+});
+function reply(id){
+	$("#parent_id").val(id);
+}
+</#macro> 
+<#macro css_import>
+<link rel="stylesheet" href="${CTPATH}/assets/mediaelement/mediaelementplayer.css" />
+<link rel="stylesheet" href="${CTPATH}/assets/highlight/styles/zenburn.css">
+</#macro>
+<@layout>
+<div class="u-info-header">
+    <h2>${content.title!}</h2>
+    <div class="u-info-times">${content.getTaxonomyAsUrl('category')!'未分类'} 发布于 ${content.created?string('yyyy-MM-dd')!} <span class="article_comment">${content.commentCount!'0'}</span> <span class="article_view">${content.viewCount!'0'}</span></div>
+</div>
+<div class="u-info-body">
+    ${content.text!}
+</div>
+<div class="u-info-copyright">
+    <p>版权属于: ${WEB_NAME!}</p>
+    <p>原文链接：http://www.58kanpan.com${content.url}</p>
+    <p>转载时必须以链接形式注明原始出处及本声明。</p>
+</div>
+<#if content.isCommentEnable() >
+    <form action="${CPATH}/comment/submit" method="post"  id="comment">
+        <input type="hidden" name="cid" value="${(content.id)!}" >
+        <input type="hidden" name="anchor" value="comment" >
+        <input type="hidden" id="parent_id" name="parent_id" >
+        <div class="u-comment-post">
+            <h3> 发表评论 </h3>
+            <div class="u-post">
+                <textarea name="text" placeholder="说点什么吧..."></textarea><button type="submit" class="u-button">发表评论</button>
+            </div>
+            <#if OPTION('comment_need_captcha') ?? && OPTION('comment_need_captcha')=='true'>
+                <div class="u-captcha">
+                    <p class="u-captcha-title">验证码：</p>
+                    <p class="u-captcha-input"><input type="text" name="comment_captcha"></p>
+                    <p class="u-captcha-image"><img cdn-exclude src="${CPATH}/captcha" onclick="this.src='${CPATH}/captcha?d='+Math.random();" ></p>
+                </div>
+            </#if>
+        </div>
+    </form>
+</#if>
+<@jp.commentPage pageSize="10">
+<#if page ??>
+<div class="u-comment-list">
+    <h3> 全部评论：<span>${page.totalRow!}条</span></h3>
+    <#list page.getList() as comment>
+    <div class="u-comment-item">
+        <div class="u-header">
+            <a href="#"><img src="${CPATH}${comment.avatar!TPATH+'/assets/images/avatar.jpg'}"> </a>
+        </div>
+        <div class="u-comment-body">
+            <p class="u-comment-userinfo">${comment.author!} <span>${(comment.created?string("yyyy-MM-dd"))!}</span> </p>
+            <#if comment.qc_content ??>
+                <div class="u-comment-comment-replay">
+                <h4>引用来之于${comment.qc_author!}的内容</h4>
+                ${comment.qc_content!}
+            </div>
+        </#if>
+            <p>${comment.text!}</p>
+        </div>
+        <div class="f-cb">
+            <p class="u-comment-replay-button"><a href="#comment" onclick="reply('${comment.id!}')">回复</a></p>
+        </div>
+    </div>
+    </#list>
+</div>
+</#if>
+<#if (page.totalRow > 10 )>
+    <div class="pager">
+        <@pagination anchor="clist"><#list pages as pi><a href="${pi.url!}" class="${pi.style!}">${pi.text!}</a></#list>
+    </@pagination>
+    </div>
+</#if>
+</@jp.commentPage>
+<div id="u-left">
+    <#include "_tags_box.html"/>
+    <#include "_best.html"/>
+</div>
+<div id="u-right">
+    <div class="u-user">
+        <img src="${CPATH}${(content.user.avatar)!TPATH+'/assets/images/avatar.jpg'}">
+        <strong>${(content.user.nickname)!(content.user.username)!}</strong>
+        <p>${(content.user.signature)!'这家伙很赖，连签名都懒得填写...'}</p>
+    </div>
+    <#include "_searcher_box.html"/>
+    <#include "_content_box1.html"/>
+    <#include "_content_box2.html"/>
+</div>
+</@layout>

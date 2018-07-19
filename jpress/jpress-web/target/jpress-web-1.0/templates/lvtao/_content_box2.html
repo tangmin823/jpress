@@ -1,0 +1,8 @@
+<div class="u-box">
+	<h4>文章排行</h4>
+	<ul class="u-hot"><@jp.contents  module="article" count="20" orderBy="view_count">
+		<#list contents as content>
+		<li><a href="${(content.url)!}">${(content.title)!}</a></li></#list>
+	</@jp.contents>
+	</ul>
+</div>
