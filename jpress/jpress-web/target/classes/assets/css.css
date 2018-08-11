@@ -94,7 +94,7 @@ textarea{resize:vertical;line-height:1.5}
 .u-tags .u-tags-item-bottom{background:url("site_cate_bottom_bg.gif") no-repeat scroll left top;border-right:1px solid #83abc6;font-size:0;height:5px}
 
 .u-search{margin:10px;position: relative; border-right:80px solid transparent;}
-.u-search input[type=text]{border-radius:5px 0 0 5px;width:100%;border-color:#0e4773;height:2rem;}
+.u-search input[type=text]{border-radius:5px 0 0 5px;width:98%;border-color:#0e4773;height:2rem;}
 .u-search button {color: #fff;height:2rem;  line-height:2rem;border-radius:0 5px 5px 0;  position: absolute;border:1px solid #0e4773;border-left:none; right:-80px;text-align: center;width:80px;background-color: #0e4773; }
 
 .u-box{border: 1px solid #ddd;margin-bottom: 20px;padding: 5px;}
